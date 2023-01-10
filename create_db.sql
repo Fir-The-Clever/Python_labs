@@ -1,37 +1,28 @@
-drop database if exists lab3_db;
-drop role if exists lab3;
+drop database if exists service_db;
+drop role if exists lab4;
 
-create user lab3 ;
-alter user lab3 with encrypted password 'lab3';
-alter role lab3 superuser;
-create database lab3_db owner lab3;
+create user lab4;
+alter user lab4 with encrypted password 'lab4';
+alter role lab4 superuser;
+create database service_db owner lab4;
 
-\connect lab3_db;
+\connect service_db;
 
-DROP TABLE if exists department;
-CREATE TABLE department (dep_id SERIAL PRIMARY KEY, dep_name varchar NOT NULL, dean varchar NOT NULL);
-INSERT INTO department (dep_name, dean) VALUES ('IU5', 'Ivan Proba');
-INSERT INTO department (dep_name, dean) VALUES ('IU7', 'Vadim Allmight');
+DROP TABLE if exists service.users;
 
-DROP TABLE if exists student_group;
-CREATE TABLE student_group (gr_id SERIAL PRIMARY KEY, gr_name varchar NOT NULL, dep_id int REFERENCES department(dep_id));
-INSERT INTO student_group (gr_name, dep_id) VALUES ('IU5-1', 1);
-INSERT INTO student_group (gr_name, dep_id) VALUES ('IU5-2', 1);
-INSERT INTO student_group (gr_name, dep_id) VALUES ('IU7-3b', 2);
-INSERT INTO student_group (gr_name, dep_id) VALUES ('IU7-4b', 2);
 
-DROP TABLE if exists student;
-CREATE TABLE student (st_id SERIAL PRIMARY KEY, st_name varchar NOT NULL, address varchar NOT NULL, gr_id int REFERENCES student_group(gr_id));
-INSERT INTO student (st_name, address, gr_id) VALUES ('Tony Stark', 'Moscow', 1);
-INSERT INTO student (st_name, address, gr_id) VALUES ('Steve Rogers', 'Moscow', 1);
-INSERT INTO student (st_name, address, gr_id) VALUES ('Peter Parker', 'Moscow', 1);
-INSERT INTO student (st_name, address, gr_id) VALUES ('Charles Xavier', 'Moscow', 1);
-INSERT INTO student (st_name, address, gr_id) VALUES ('Clint Barton', 'Moscow', 1);
+CREATE TABLE service.users (id SERIAL NOT NULL, full_name VARCHAR NOT NULL, login VARCHAR NOT NULL, password VARCHAR NOT NULL);
+INSERT INTO service.users (full_name, login, password) VALUES ('Ivan Proba','Fir', '12345'); 
 
-INSERT INTO student (st_name, address, gr_id) VALUES ('Clark Kent', 'SPb', 2);
-INSERT INTO student (st_name, address, gr_id) VALUES ('Diana Prince', 'SPb', 2);
-INSERT INTO student (st_name, address, gr_id) VALUES ('Barry Allen', 'SPb', 2);
-INSERT INTO student (st_name, address, gr_id) VALUES ('Wally West', 'SPb', 2);
-INSERT INTO student (st_name, address, gr_id) VALUES ('Billy Batson', 'SPb', 2);
+INSERT INTO service.users (full_name, login, password) VALUES ('Peter Parker','Spidey', '111'); 
+INSERT INTO service.users (full_name, login, password) VALUES ('Tony Stark','Stark', '222'); 
+INSERT INTO service.users (full_name, login, password) VALUES ('Clark Kent','Super', '333'); 
+INSERT INTO service.users (full_name, login, password) VALUES ('Diana Prince','Wonder', '444'); 
+INSERT INTO service.users (full_name, login, password) VALUES ('Kamala Khan','Marvel', '555'); 
+INSERT INTO service.users (full_name, login, password) VALUES ('Billy Batcon','Shazam', '666'); 
+INSERT INTO service.users (full_name, login, password) VALUES ('Bruce Wayne','Bat', '777'); 
+INSERT INTO service.users (full_name, login, password) VALUES ('Matt Merdock','Devil', '888'); 
+INSERT INTO service.users (full_name, login, password) VALUES ('Barry Allen','Flash', '999'); 
+INSERT INTO service.users (full_name, login, password) VALUES ('Doctor','Doctor', '000'); 
 
-SELECT * FROM student WHERE gr_id = 2;
+SELECT * FROM service.users;
