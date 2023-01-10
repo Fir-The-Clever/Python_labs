@@ -1,0 +1,268 @@
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 10.19 (Ubuntu 10.19-0ubuntu0.18.04.1)
+-- Dumped by pg_dump version 10.19 (Ubuntu 10.19-0ubuntu0.18.04.1)
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET xmloption = content;
+SET client_min_messages = warning;
+SET row_security = off;
+
+--
+-- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: 
+--
+
+CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
+
+
+--
+-- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
+
+
+SET default_tablespace = '';
+
+SET default_with_oids = false;
+
+--
+-- Name: department; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.department (
+    dep_id integer NOT NULL,
+    dep_name character varying NOT NULL,
+    dean character varying NOT NULL
+);
+
+
+ALTER TABLE public.department OWNER TO postgres;
+
+--
+-- Name: department_dep_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.department_dep_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.department_dep_id_seq OWNER TO postgres;
+
+--
+-- Name: department_dep_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.department_dep_id_seq OWNED BY public.department.dep_id;
+
+
+--
+-- Name: student; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.student (
+    st_id integer NOT NULL,
+    st_name character varying NOT NULL,
+    address character varying NOT NULL,
+    gr_id integer
+);
+
+
+ALTER TABLE public.student OWNER TO postgres;
+
+--
+-- Name: student_group; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.student_group (
+    gr_id integer NOT NULL,
+    gr_name character varying NOT NULL,
+    dep_id integer
+);
+
+
+ALTER TABLE public.student_group OWNER TO postgres;
+
+--
+-- Name: student_group_gr_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.student_group_gr_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.student_group_gr_id_seq OWNER TO postgres;
+
+--
+-- Name: student_group_gr_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.student_group_gr_id_seq OWNED BY public.student_group.gr_id;
+
+
+--
+-- Name: student_st_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.student_st_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.student_st_id_seq OWNER TO postgres;
+
+--
+-- Name: student_st_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.student_st_id_seq OWNED BY public.student.st_id;
+
+
+--
+-- Name: department dep_id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.department ALTER COLUMN dep_id SET DEFAULT nextval('public.department_dep_id_seq'::regclass);
+
+
+--
+-- Name: student st_id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.student ALTER COLUMN st_id SET DEFAULT nextval('public.student_st_id_seq'::regclass);
+
+
+--
+-- Name: student_group gr_id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.student_group ALTER COLUMN gr_id SET DEFAULT nextval('public.student_group_gr_id_seq'::regclass);
+
+
+--
+-- Data for Name: department; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.department (dep_id, dep_name, dean) FROM stdin;
+1	IU5	Ivan Proba
+2	IU7	Vadim Allmight
+\.
+
+
+--
+-- Data for Name: student; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.student (st_id, st_name, address, gr_id) FROM stdin;
+1	Tony Stark	Moscow	1
+2	Steve Rogers	Moscow	1
+3	Peter Parker	Moscow	1
+4	Charles Xavier	Moscow	1
+5	Clint Barton	Moscow	1
+6	Clark Kent	SPb	2
+7	Diana Prince	SPb	2
+8	Barry Allen	SPb	2
+9	Wally West	SPb	2
+10	Billy Batson	SPb	2
+\.
+
+
+--
+-- Data for Name: student_group; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.student_group (gr_id, gr_name, dep_id) FROM stdin;
+1	IU5-1	1
+2	IU5-2	1
+3	IU7-3b	2
+4	IU7-4b	2
+\.
+
+
+--
+-- Name: department_dep_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.department_dep_id_seq', 2, true);
+
+
+--
+-- Name: student_group_gr_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.student_group_gr_id_seq', 4, true);
+
+
+--
+-- Name: student_st_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.student_st_id_seq', 10, true);
+
+
+--
+-- Name: department department_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.department
+    ADD CONSTRAINT department_pkey PRIMARY KEY (dep_id);
+
+
+--
+-- Name: student_group student_group_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.student_group
+    ADD CONSTRAINT student_group_pkey PRIMARY KEY (gr_id);
+
+
+--
+-- Name: student student_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.student
+    ADD CONSTRAINT student_pkey PRIMARY KEY (st_id);
+
+
+--
+-- Name: student student_gr_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.student
+    ADD CONSTRAINT student_gr_id_fkey FOREIGN KEY (gr_id) REFERENCES public.student_group(gr_id);
+
+
+--
+-- Name: student_group student_group_dep_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.student_group
+    ADD CONSTRAINT student_group_dep_id_fkey FOREIGN KEY (dep_id) REFERENCES public.department(dep_id);
+
+
+--
+-- PostgreSQL database dump complete
+--
+
