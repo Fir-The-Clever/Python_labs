@@ -8,10 +8,9 @@ create database schedule_db owner lab7;
 
 \connect schedule_db;
 
-DROP TABLE if exists subject;
 DROP TABLE if exists timetable;
 DROP TABLE if exists teacher;
-
+DROP TABLE if exists subject;
 
 CREATE TABLE subject (sub_id SERIAL PRIMARY KEY, title VARCHAR NOT NULL);
 INSERT INTO subject (title) VALUES ('МХК');
